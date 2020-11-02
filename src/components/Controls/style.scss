@@ -1,0 +1,52 @@
+
+$colors: #007BFF, #28A745, #17A2B8, #F8F9FA, #FFC107, #6C757D, #DC3545, #343A10;
+
+
+.controls.row {
+    padding: 5px 1px;
+    font-size: 17px;
+    background: #222;
+
+    .col {
+        &.zoom {
+            max-width: 100px;
+        }
+
+        &.population {
+            text-align: right;
+            p {
+                display: inline-block;
+                &:first-child {
+                    margin-right: 10px;
+                }
+            }
+        }
+
+        &.center {
+            text-align: center;
+        }
+
+        &.rand {
+            max-width: 120px;
+            button {
+                padding: 6px;
+                border-radius: 2px;
+            }
+        }
+
+        &.color, &.clear {
+            max-width: 43px;
+            button {
+                padding: 6px 8px;
+            }
+        }
+
+        &.clear {
+            button {
+                svg {
+                    vertical-align: middle;
+                }
+            }
+        }
+    }
+}
