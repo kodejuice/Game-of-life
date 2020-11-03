@@ -1,0 +1,15 @@
+
+.grid {
+    $border: 0.5px solid #000;
+    margin-top: 10px;
+
+    .row {
+        border-left: $border;
+        overflow: hidden;
+
+        &:first-child {
+            border-top: $border;
+        }
+
+    }
+}
