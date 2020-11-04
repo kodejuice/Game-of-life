@@ -8,7 +8,7 @@
             <div class="row">
                 <template v-for="j in grid.width()">
                     <cell
-                        :key="Math.random()"
+                        :key="grid.cell_id(i-1, j-1)"
                         :index="{i:i-1, j:j-1}"
                         :active="grid.get(i-1, j-1)"
                         :scale_factor="grid.scale_factor()"

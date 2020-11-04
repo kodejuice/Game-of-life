@@ -3,6 +3,8 @@
  * (C) 2020
  */
 
+import {random} from 'lodash';
+
 import Matrix from './Matrix';
 
 const SCALES = [
@@ -34,6 +36,7 @@ randomize(): this
 class ConwayGrid extends Matrix<boolean> {
     private dead_cells: Set<string>;
     private alive_cells: Set<string>;
+    private cell_ids: Map<string, number>;
     private $scale_factor: SCALE = 2;
 
     constructor() {
@@ -45,6 +48,8 @@ class ConwayGrid extends Matrix<boolean> {
 
         this.dead_cells = new Set();
         this.alive_cells = new Set();
+        this.cell_ids = new Map();
+        this.$init_cell_ids();
     }
 
     /**
@@ -68,6 +73,15 @@ class ConwayGrid extends Matrix<boolean> {
      */
     cell_index(i:number, j: number) {
         return `${i}:${j}`;
+    }
+
+    /**
+     * return unique id of a cell
+     * @param {number} i row index
+     * @param {number} j column index
+     */
+    cell_id(i:number, j:number) {
+        return this.cell_ids.get(this.cell_index(i, j));
     }
 
     /**
@@ -179,6 +193,8 @@ class ConwayGrid extends Matrix<boolean> {
     private $update_grid_stat(check_cells = true) {
         this.alive_cells = new Set();
         this.dead_cells = new Set();
+        this.$init_cell_ids();
+
         if (!check_cells) return;
 
         for (let i=0; i<this.height(); ++i) {
@@ -204,6 +220,19 @@ class ConwayGrid extends Matrix<boolean> {
         else if (monitor_deaths) { // dead
             this.dead_cells.add(index);            
             this.alive_cells.delete(index);
+        }
+    }
+
+    /**
+     * Initializes the cell identifiers.
+     */
+    private $init_cell_ids() {
+        this.cell_ids.clear();
+
+        for (let i=0; i<this.height(); ++i) {
+            for (let j=0; j<this.width(); ++j) {
+                this.cell_ids.set(this.cell_index(i,j), random(1,10e10,true));
+            }
         }
     }
 }
