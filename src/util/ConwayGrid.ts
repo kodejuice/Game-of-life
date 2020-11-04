@@ -55,11 +55,9 @@ class ConwayGrid extends Matrix<boolean> {
         return this.dead_cells;
     }
 
-
     cell_index(i:number, j: number) {
         return `${i}:${j}`;
     }
-
 
     set(i: number, j: number, value: boolean) {
         super.set(i, j, value);
@@ -100,21 +98,32 @@ class ConwayGrid extends Matrix<boolean> {
         this.dead_cells = new Set(this.dead_cells);
     }
 
+    clear_grid() {
+        for (let i=0; i<this.height(); ++i) {
+            for (let j=0; j<this.width(); ++j) {
+                super.set(i,j,false);
+            }
+        }
+        this.$update_grid_stat(false);
+        this.$update_grid();
+    }
+
     private $scale(factor?: 1|2|3|4|5|6|7) {
         if (!factor) return this.$scale_factor;
 
         const {rows, cols} = SCALES[factor];
-        this.set_width(cols);
-        this.set_height(rows);
+        this.$set_width(cols);
+        this.$set_height(rows);
 
         this.$update_grid_stat();
 
         return this.$scale_factor = factor;
     }
 
-    private $update_grid_stat() {
+    private $update_grid_stat(check_cells = true) {
         this.alive_cells = new Set();
         this.dead_cells = new Set();
+        if (!check_cells) return;
 
         for (let i=0; i<this.height(); ++i) {
             for (let j=0; j<this.width(); ++j) {

@@ -71,7 +71,7 @@ class Matrix<T> {
      */
     increase_height() {
         if (this.height() > 500) return;
-        this.set_height(this.height() + 1);
+        this.$set_height(this.height() + 1);
     }
 
     /**
@@ -80,15 +80,27 @@ class Matrix<T> {
      * @param  {number}  j column index
      * @return {boolean}   in range?
      */
-    protected in_range(i: number, j: number): boolean {
+    private in_range(i: number, j: number): boolean {
         return (i>=0 && i<this.height()) && (j>=0 && j<this.width());
+    }
+
+    /**
+     * update grid matrix with a modified clone
+     * @param {T[][]} grid
+     */
+    protected $update_grid(grid?: T[][]) {
+        if (grid) {
+            this.grid = grid;
+        } else {
+            this.grid = clone(this.grid);
+        }
     }
 
     /**
      * increase/decrease grid height
      * @param {number} new_height
      */
-    protected set_height(new_height: number) {
+    protected $set_height(new_height: number) {
         const $height = this.height(),
               $width  = this.width();
         let to_add = new_height - $height;
@@ -105,14 +117,14 @@ class Matrix<T> {
             }
         }
 
-        this.grid = grid;
+        this.$update_grid(grid);
     }
 
     /**
      * increase/decrease grid width
      * @param {number} new_width
      */
-    protected set_width(new_width: number) {
+    protected $set_width(new_width: number) {
         const $width = this.width();
 
         const to_add = new_width - $width;
@@ -150,7 +162,7 @@ class Matrix<T> {
             }
         });
 
-        this.grid = grid;
+        this.$update_grid(grid);
     }
 }
 

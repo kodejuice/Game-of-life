@@ -11,8 +11,13 @@
             <div class="col col-1 color" title="Change cell color">
                 <change-color-button />
             </div>
+
             <div class="col col-1 clear">
-                <b-button variant='danger' title="Clear grid">
+                <b-button
+                    variant='danger'
+                    title="Clear grid"
+                    @click="clear"
+                >
                     <b-icon icon="x-circle-fill" />
                 </b-button>
             </div>
@@ -71,11 +76,23 @@ export default class Controls extends Vue {
     @Prop() grid!: ConwayGrid;
 
     scale(dir: 'up'|'down') {
+        this.slow_op(()=>{
+            this.grid.scale(dir);
+        });
+    }
+
+    clear() {
+        this.slow_op(()=>{
+            this.grid.clear_grid();
+        })
+    }
+
+    slow_op(fn: ()=>void) {
         this.$emit('halt');
         this.overlay = true;
         this.$nextTick(()=>{
             defer(()=>{
-                this.grid.scale(dir);
+                fn();
                 this.$emit('resume');
                 this.overlay = false;
             });
