@@ -28,7 +28,7 @@ randomize(): this
  * Conways Game Of Life grid.
  *
  * @class      ConwayGrid
- * @extends    Matrix<true|false>
+ * @extends    Matrix<boolean>
  * @author     (Biereagu Sochima <sochima.agu1@gmail.com>)
  */
 class ConwayGrid extends Matrix<boolean> {
