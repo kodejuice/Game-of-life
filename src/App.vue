@@ -1,13 +1,18 @@
 <template>
     <div id="app" class="container-fluid conway">
 
-        <grid
-            :grid="conway_grid"
-        />
+        <div style="position: relative;">
+            <grid
+                :grid="conway_grid"
+                :is_halted="halt_simulation"
+            />
 
-        <controls
-            :grid="conway_grid"
-        />
+            <controls
+                :grid="conway_grid"
+                @halt="halt_simulation = true"
+                @resume="halt_simulation = false"
+            />
+        </div>
 
     </div>
 </template>
@@ -28,11 +33,11 @@ import ConwayGrid from './util/ConwayGrid';
 })
 
 export default class App extends Vue {
+    halt_simulation: boolean = false;
     conway_grid: ConwayGrid = new ConwayGrid();
-
 }
 </script>
 
 <style lang="scss">
-    @import './sass/app';
+@import './sass/app';
 </style>

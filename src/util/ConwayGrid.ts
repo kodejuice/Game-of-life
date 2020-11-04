@@ -7,7 +7,7 @@ import Matrix from './Matrix';
 
 const SCALES = [
     { cols: 0,   rows: 0 },
-    { cols: 200, rows: 96 },  //1
+    { cols: 150, rows: 80 },  //1
     { cols: 100, rows: 46 },  //2
     { cols: 50,  rows: 24 },  //3
     { cols: 25,  rows: 12 },  //4
@@ -86,8 +86,8 @@ class ConwayGrid extends Matrix<boolean> {
     }
 
     can_scale(direction: 'up'|'down'): boolean {
-        if (direction == 'up') return this.$scale() < 7;
-        else return this.$scale() > 0;
+        if (direction == 'up') return this.$scale() < SCALES.length-1;
+        else return this.$scale() > 1;
     }
 
     scale_factor(): SCALE {

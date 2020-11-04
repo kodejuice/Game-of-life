@@ -35,6 +35,7 @@ import ConwayGrid from '../../util/ConwayGrid';
 export default class Grid extends Vue {
     dragging: boolean = false;
     @Prop() grid!: ConwayGrid;
+    @Prop() is_halted!: boolean;
 
     drag_start() {
         this.dragging = true;
@@ -46,7 +47,7 @@ export default class Grid extends Vue {
     }
 
     mousemove(ev: Event, clicked = false, index: {i:number, j:number}) {
-        if (!this.dragging && !clicked) return;
+        if ((!this.dragging && !clicked) || this.is_halted) return;
 
         let box = (((ev as MouseEvent).target) as HTMLDivElement);
         box.style.background = "#17A2B8";

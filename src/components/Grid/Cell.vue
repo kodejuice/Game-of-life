@@ -37,12 +37,12 @@ $border: 0.5px solid #000;
     &.color { background: #17A2B8; }
 
     // represents the size of each cell/column
-    &.scale-1 { @include box(.5%); }  /*200 cols*/
-    &.scale-2 { @include box(1%); }   /*100 cols*/
-    &.scale-3 { @include box(2%); }   /*50 cols*/
-    &.scale-4 { @include box(4%); }   /*25 cols*/
-    &.scale-5 { @include box(5%); }   /*20 cols*/
-    &.scale-6 { @include box(10%); }  /*10 cols*/
-    &.scale-7 { @include box(20%); }  /*5 cols*/
+    &.scale-1 { @include box(.66666%); }  /*150 columns*/
+    &.scale-2 { @include box(1%); }   /*100 columns*/
+    &.scale-3 { @include box(2%); }   /*50 columns*/
+    &.scale-4 { @include box(4%); }   /*25 columns*/
+    &.scale-5 { @include box(5%); }   /*20 columns*/
+    &.scale-6 { @include box(10%); }  /*10 columns*/
+    &.scale-7 { @include box(20%); }  /*5 columns*/
 }
 </style>
