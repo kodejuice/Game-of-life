@@ -99,13 +99,8 @@ class ConwayGrid extends Matrix<boolean> {
     }
 
     clear_grid() {
-        for (let i=0; i<this.height(); ++i) {
-            for (let j=0; j<this.width(); ++j) {
-                super.set(i,j,false);
-            }
-        }
+        this.clear();
         this.$update_grid_stat(false);
-        this.$update_grid();
     }
 
     private $scale(factor?: 1|2|3|4|5|6|7) {

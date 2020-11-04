@@ -49,6 +49,20 @@ class Matrix<T> {
     }
 
     /**
+     * Clears the matrix.
+     */
+    clear() {
+        let $height = this.height(),
+            $width = this.width(),
+            $value = this.default_value;
+
+        this.grid = Array.from(
+            {length: $height},
+            row => Array.from({length: $width}, v=>$value)
+        );
+    }
+
+    /**
      * grid width
      *
      * @return     {number}
