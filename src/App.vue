@@ -5,7 +5,9 @@
             :grid="conway_grid"
         />
 
-        <controls />
+        <controls
+            :grid="conway_grid"
+        />
 
     </div>
 </template>

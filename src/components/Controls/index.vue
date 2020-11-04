@@ -20,8 +20,8 @@
         </div>
 
         <div class="col col-3 population" title="Census">
-            <p class="text-info">[10 alive]</p>
-            <p class="text-danger">[20 dead]</p>
+            <p class="text-info">[{{grid.alive().size}} alive]</p>
+            <p class="text-danger">[{{grid.dead().size}} dead]</p>
         </div>
 
         <div class="col"></div>
@@ -37,12 +37,13 @@
 
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue } from 'vue-property-decorator';
 import { BButton, BIcon, BIconShuffle, BIconXCircleFill } from 'bootstrap-vue';
 import ChangeColorButton from './ChangeColorButton.vue';
 import ChangeSpeedButton from './ChangeSpeedButton.vue';
 import ZoomButton from './ZoomButton.vue';
 import PlayButton from './PlayButton.vue';
+import ConwayGrid from '../../util/ConwayGrid';
 
 @Component({
     components: {
@@ -57,6 +58,8 @@ import PlayButton from './PlayButton.vue';
     }
 })
 export default class Controls extends Vue {
+    @Prop() grid!: ConwayGrid;
+
 }
 </script>
 

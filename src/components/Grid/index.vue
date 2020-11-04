@@ -42,7 +42,7 @@ export default class Grid extends Vue {
 
     drag_end() {
         this.dragging = false;
-        // this.$forceUpdate();
+        this.on_draw_end();
     }
 
     mousemove(ev: Event, clicked = false, index: {i:number, j:number}) {
@@ -54,6 +54,13 @@ export default class Grid extends Vue {
         const {i, j} = index;
         this.grid.set(i, j, true);
 
+        if (clicked) {
+            this.on_draw_end();
+        }
+    }
+
+    private on_draw_end() {
+        this.grid.update_census();
     }
 }
 </script>

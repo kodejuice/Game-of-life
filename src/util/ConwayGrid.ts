@@ -63,7 +63,7 @@ class ConwayGrid extends Matrix<boolean> {
 
     set(i: number, j: number, value: boolean) {
         super.set(i, j, value);
-        this.monitor_cell_life(i, j);
+        this.$monitor_cell_life(i, j);
     }
 
     toggle(i:number, j:number) {
@@ -94,6 +94,12 @@ class ConwayGrid extends Matrix<boolean> {
         return this.$scale_factor;
     }
 
+    update_census() {
+        // this lets Vue know about changes in the sets
+        this.alive_cells = new Set(this.alive_cells);
+        this.dead_cells = new Set(this.dead_cells);
+    }
+
     private $scale(factor?: 1|2|3|4|5|6|7) {
         if (!factor) return this.$scale_factor;
 
@@ -101,24 +107,23 @@ class ConwayGrid extends Matrix<boolean> {
         this.set_width(cols);
         this.set_height(rows);
 
-        // update population stat
-        this.update_grid_stat();
+        this.$update_grid_stat();
 
         return this.$scale_factor = factor;
     }
 
-    private update_grid_stat() {
+    private $update_grid_stat() {
         this.alive_cells = new Set();
         this.dead_cells = new Set();
 
         for (let i=0; i<this.height(); ++i) {
             for (let j=0; j<this.width(); ++j) {
-                this.monitor_cell_life(i, j, false);
+                this.$monitor_cell_life(i, j, false);
             }
         }
     }
 
-    private monitor_cell_life(i:number, j:number, monitor_deaths=true) {
+    private $monitor_cell_life(i:number, j:number, monitor_deaths=true) {
         const index = this.cell_index(i, j);
         if (this.get(i, j) == true) { // alive
             this.alive_cells.add(index);
