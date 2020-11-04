@@ -82,6 +82,7 @@ export default class Controls extends Vue {
     }
 
     clear() {
+        if (this.grid.alive().size==0 || !confirm("Clear the grid?")) return;
         this.slow_op(()=>{
             this.grid.clear_grid();
         })
