@@ -184,11 +184,23 @@ class ConwayGrid extends Matrix<boolean> {
     }
 
     /**
+     * shuffle grid then update grid stats
+     * to record the cells that "died" in the process,
+     * and also re initialize cell ids
+     * 
+     */
+    shuffle() {
+        super.shuffle();
+        this.$update_grid_stat();
+    }
+
+    /**
      * resets population sets,
      * then go over each cell, check if the 
      * cell is dead/alive cells and update appropriate sets
      *
-     * @param      {boolean}  check_cells  should we go over each cell?
+     * @param      {boolean}  check_cells   should we go over each cell?
+     * @param      {boolean}  init_cell_ids initialize cell ids?
      */
     private $update_grid_stat(check_cells = true) {
         this.alive_cells = new Set();

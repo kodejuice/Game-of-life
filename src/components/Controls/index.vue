@@ -3,7 +3,7 @@
         <div class="overlay" v-if="overlay"></div>
         <div class="controls row">
             <div class="col col-2 rand">
-                <b-button variant="outline-info" title="Randomize grid cells">
+                <b-button variant="outline-info" title="Shuffle grid cells" @click="shuffle">
                     <b-icon icon="shuffle" /> random
                 </b-button>
             </div>
@@ -13,11 +13,7 @@
             </div>
 
             <div class="col col-1 clear">
-                <b-button
-                    variant='danger'
-                    title="Clear grid"
-                    @click="clear"
-                >
+                <b-button variant='danger' title="Clear grid" @click="clear">
                     <b-icon icon="x-circle-fill" />
                 </b-button>
             </div>
@@ -76,19 +72,30 @@ export default class Controls extends Vue {
     @Prop() grid!: ConwayGrid;
 
     scale(dir: 'up'|'down') {
-        this.slow_op(()=>{
+        this.dom_update(()=>{
             this.grid.scale(dir);
         });
     }
 
     clear() {
-        if (this.grid.alive().size==0 || !confirm("Clear the grid?")) return;
-        this.slow_op(()=>{
+        if (this.grid_size==0 || !confirm("Clear the grid?")) return;
+        this.dom_update(()=>{
             this.grid.clear_grid();
         })
     }
 
-    slow_op(fn: ()=>void) {
+    shuffle() {
+        if (this.grid_size == 0) return;
+        this.dom_update(()=>{
+            this.grid.shuffle();
+        });
+    }
+
+    get grid_size() {
+        return this.grid.alive().size;
+    }
+
+    private dom_update(fn: ()=>void) {
         this.$emit('halt');
         this.overlay = true;
         this.$nextTick(()=>{

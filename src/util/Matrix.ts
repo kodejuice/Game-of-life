@@ -3,7 +3,7 @@
  * (C) 2020
  */
 
-import {clone} from 'lodash';
+import {clone, shuffle} from 'lodash';
 
 /**
  * Matrix data structure.
@@ -86,6 +86,13 @@ class Matrix<T> {
     increase_height() {
         if (this.height() > 500) return;
         this.$set_height(this.height() + 1);
+    }
+
+    /**
+     * Shuffle matrix
+     */
+    shuffle() {
+        this.$update_grid(shuffle(this.grid.map(row => shuffle(row))));
     }
 
     /**
