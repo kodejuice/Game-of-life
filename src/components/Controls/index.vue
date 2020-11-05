@@ -9,7 +9,9 @@
             </div>
 
             <div class="col col-1 color" title="Change cell color">
-                <change-color-button />
+                <change-color-button
+                    @update_color="update_cell_color($event)"
+                />
             </div>
 
             <div class="col col-1 clear">
@@ -54,6 +56,7 @@ import ChangeSpeedButton from './ChangeSpeedButton.vue';
 import ZoomButton from './ZoomButton.vue';
 import PlayButton from './PlayButton.vue';
 import ConwayGrid from '../../util/ConwayGrid';
+import W from '../../util/state';
 
 @Component({
     components: {
@@ -89,6 +92,10 @@ export default class Controls extends Vue {
         this.dom_update(()=>{
             this.grid.shuffle();
         });
+    }
+
+    update_cell_color(color: string) {
+        W.APP_STATE.cell_color = color;
     }
 
     get grid_size() {

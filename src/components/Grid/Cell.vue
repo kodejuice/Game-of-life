@@ -1,8 +1,10 @@
 <template>
     <div
-        @mousemove="$emit('mouse_move', $event, false, index)"
+        ref="cell"
         @click="$emit('mouse_move', $event, true, index)"
-        :class="{col: true, [`scale-${scale_factor}`]: true, color: active}"
+        @mousemove="$emit('mouse_move', $event, false, index)"
+        :class="{col: true, [`scale-${scale_factor}`]: true}"
+        :style="{background: active ? cell_color : 'unset'}"
     ></div>
 </template>
 
@@ -15,6 +17,7 @@ export default class Cell extends Vue {
     @Prop() active!: boolean;
     @Prop() index!: {i:number, j:number};
     @Prop() scale_factor!: 1|2|3|4|5|6|7;
+    @Prop() cell_color!: string;
 }
 </script>
 

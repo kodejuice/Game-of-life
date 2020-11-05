@@ -35,6 +35,7 @@ import ConwayGrid from './util/ConwayGrid';
 export default class App extends Vue {
     halt_simulation: boolean = false;
     conway_grid: ConwayGrid = new ConwayGrid();
+
 }
 </script>
 

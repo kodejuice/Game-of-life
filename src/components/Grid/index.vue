@@ -1,3 +1,4 @@
+
 <template>
     <div
         class="grid"
@@ -9,9 +10,11 @@
                 <template v-for="j in grid.width()">
                     <cell
                         :key="grid.cell_id(i-1, j-1)"
+                        :ref="grid.cell_id(i-1, j-1)"
                         :index="{i:i-1, j:j-1}"
                         :active="grid.get(i-1, j-1)"
                         :scale_factor="grid.scale_factor()"
+                        :cell_color="color()"
                         @mouse_move="mousemove"
                     />
                 </template>
@@ -25,6 +28,8 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import Cell from './Cell.vue';
 import ConwayGrid from '../../util/ConwayGrid';
+import {random_color} from './helper';
+import W from '../../util/state';
 
 
 @Component({
@@ -49,20 +54,38 @@ export default class Grid extends Vue {
     mousemove(ev: Event, clicked = false, index: {i:number, j:number}) {
         if ((!this.dragging && !clicked) || this.is_halted) return;
 
-        let box = (((ev as MouseEvent).target) as HTMLDivElement);
-        box.style.background = "#17A2B8";
-
-        const {i, j} = index;
-        this.grid.set(i, j, true);
+        const {i,j} = index;
+        this.color_cell(i, j);
 
         if (clicked) {
             this.on_draw_end();
         }
     }
 
+
+    color() {
+        const {cell_color} = W.APP_STATE;
+        if (cell_color == 'random') {
+            return random_color();
+        }
+        return cell_color;
+    }
+
+    private color_cell(i:number, j:number, alive = true) {
+        const box = this.cell_elem(i, j);
+        this.grid.set(i, j, alive);
+        box.style.background = alive ? this.color() : 'initial';
+    }
+
+    private cell_elem(i: number, j: number): HTMLDivElement {
+        const cell = this.$refs[this.grid.cell_id(i, j)] as Vue[];
+        return cell[0].$refs.cell as HTMLDivElement;
+    }
+
     private on_draw_end() {
         this.grid.update_census();
     }
+
 }
 </script>
 

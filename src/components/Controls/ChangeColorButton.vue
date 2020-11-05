@@ -3,17 +3,19 @@
         <b-dropdown-form>
             <b-form-input
                 type="color"
-                value="#17A2B8"
-                @change="hideDropdown"
+                v-model="input_color"
+                @change="color_select(input_color)"
+                validate
             />
             <div class="dropdown-divider"></div>
-            <b-button @click="hideDropdown" id="random">Random</b-button>
+            <b-button @click="color_select('random')" id="random" title="Random colors">Random</b-button>
         </b-dropdown-form>
     </b-dropdown>
 </template>
 
 
 <script lang="ts">
+import W from '../../util/state';
 import { Component, Vue } from 'vue-property-decorator';
 import { BButton, BDropdown, BDropdownForm, BFormInput, DropdownPlugin } from 'bootstrap-vue';
 Vue.use(DropdownPlugin);
@@ -27,6 +29,13 @@ Vue.use(DropdownPlugin);
     }
 })
 export default class ChangeColorButton extends Vue {
+    input_color: string = W.cell_color;
+
+    color_select(color: string) {
+        this.$emit('update_color', color);
+        this.hideDropdown();
+    }
+
     hideDropdown() {
         (this.$refs.dropdown as any).hide(true);
     }

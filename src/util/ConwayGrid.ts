@@ -81,7 +81,7 @@ class ConwayGrid extends Matrix<boolean> {
      * @param {number} j column index
      */
     cell_id(i:number, j:number) {
-        return this.cell_ids.get(this.cell_index(i, j));
+        return this.cell_ids.get(this.cell_index(i, j)) as number;
     }
 
     /**
