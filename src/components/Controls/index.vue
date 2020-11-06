@@ -56,7 +56,7 @@ import ChangeSpeedButton from './ChangeSpeedButton.vue';
 import ZoomButton from './ZoomButton.vue';
 import PlayButton from './PlayButton.vue';
 import ConwayGrid from '../../util/ConwayGrid';
-import W from '../../util/state';
+import W from '../../state';
 
 @Component({
     components: {

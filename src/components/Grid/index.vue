@@ -29,7 +29,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 import Cell from './Cell.vue';
 import ConwayGrid from '../../util/ConwayGrid';
 import {random_color} from './helper';
-import W from '../../util/state';
+import W from '../../state';
 
 
 @Component({

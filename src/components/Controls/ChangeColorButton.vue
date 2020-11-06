@@ -15,7 +15,7 @@
 
 
 <script lang="ts">
-import W from '../../util/state';
+import W from '../../state';
 import { Component, Vue } from 'vue-property-decorator';
 import { BButton, BDropdown, BDropdownForm, BFormInput, DropdownPlugin } from 'bootstrap-vue';
 Vue.use(DropdownPlugin);
