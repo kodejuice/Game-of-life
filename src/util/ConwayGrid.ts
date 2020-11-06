@@ -67,12 +67,22 @@ class ConwayGrid extends Matrix<boolean> {
     }
 
     /**
-     * return the index of a cell in a grid as string "i:j"
+     * encode index of a cell in a grid as string "i:j"
      * @param {number} i row index
      * @param {number} j column index
      */
-    cell_index(i:number, j: number) {
+    encode_index(i:number, j: number) {
         return `${i}:${j}`;
+    }
+
+    /**
+     * decodes the index from result
+     *  of encode_index(...)
+     *  @param {string} index
+     */
+    decode_index(index: string): [number, number] {
+        const [i, j] = index.split(':');
+        return [+i, +j];
     }
 
     /**
@@ -81,7 +91,7 @@ class ConwayGrid extends Matrix<boolean> {
      * @param {number} j column index
      */
     cell_id(i:number, j:number) {
-        return this.cell_ids.get(this.cell_index(i, j)) as number;
+        return this.cell_ids.get(this.encode_index(i, j)) as number;
     }
 
     /**
@@ -232,7 +242,7 @@ class ConwayGrid extends Matrix<boolean> {
      * @param {boolean} monitor_deaths      should we update if its a dead cell? (dead_cells)
      */
     private $monitor_cell_life(i:number, j:number, monitor_deaths=true) {
-        const index = this.cell_index(i, j);
+        const index = this.encode_index(i, j);
         if (this.get(i, j) == true) { // alive
             this.alive_cells.add(index);
             this.dead_cells.delete(index);
@@ -251,7 +261,7 @@ class ConwayGrid extends Matrix<boolean> {
 
         for (let i=0; i<this.height(); ++i) {
             for (let j=0; j<this.width(); ++j) {
-                this.cell_ids.set(this.cell_index(i,j), random(1,10e10,true));
+                this.cell_ids.set(this.encode_index(i,j), random(1,10e10,true));
             }
         }
     }
