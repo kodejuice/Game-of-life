@@ -29,7 +29,7 @@ Vue.use(DropdownPlugin);
     }
 })
 export default class ChangeColorButton extends Vue {
-    input_color: string = W.cell_color;
+    input_color: string = W.APP_STATE.cell_color;
 
     color_select(color: string) {
         this.$emit('update_color', color);
