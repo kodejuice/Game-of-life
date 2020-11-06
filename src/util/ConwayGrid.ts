@@ -151,10 +151,15 @@ class ConwayGrid extends Matrix<boolean> {
     /**
      * update population sets, so vue can update dom accordinly
      */
-    update_census() {
+    update_census(clear = false) {
         // this lets Vue know about changes in the sets
-        this.alive_cells = new Set(this.alive_cells);
-        this.dead_cells = new Set(this.dead_cells);
+        if (clear) {
+            this.dead_cells = new Set();
+            this.alive_cells = new Set();
+        } else {
+            this.alive_cells = new Set(this.alive_cells);
+            this.dead_cells = new Set(this.dead_cells);
+        }
     }
 
     /**
