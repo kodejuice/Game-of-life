@@ -173,14 +173,6 @@ class ConwayGrid extends Matrix<boolean> {
     }
 
     /**
-     * clears the grid
-     */
-    clear_grid() {
-        this.clear();
-        this.$update_grid_stat(false);
-    }
-
-    /**
      * scale grid, sets the height/width of grid
      * according to selected scale factor
      *
@@ -199,17 +191,6 @@ class ConwayGrid extends Matrix<boolean> {
         this.$update_grid_stat();
 
         return this.$scale_factor = factor;
-    }
-
-    /**
-     * shuffle grid then update grid stats
-     * to record the cells that "died" in the process,
-     * and also re initialize cell ids
-     * 
-     */
-    shuffle() {
-        super.shuffle();
-        this.$update_grid_stat();
     }
 
     /**
