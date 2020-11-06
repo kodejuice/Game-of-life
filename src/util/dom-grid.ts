@@ -4,11 +4,13 @@
  */
 
 import Vue from 'vue';
+import {random as R} from 'lodash';
+
 import ConwayGrid from './ConwayGrid';
 
 
 interface GridComponent extends Vue {
-    color_cell(i:number, j:number, active: boolean): void,
+    activate_cell(i:number, j:number, active?:boolean): void,
     grid: ConwayGrid
 }
 
@@ -25,8 +27,12 @@ class DOMGrid {
     // @see    /src/components/Grid/index.vue     @globalize_grid_component()
     public component!: GridComponent;
 
+    /**
+     * generator to return the indexes of active cells
+     * in the grid.
+     */
     *active_cells() {
-        const {grid, color_cell} = this.component;
+        const {grid, activate_cell} = this.component;
         const alive_cells = grid.alive();
 
         for (let cell_index of alive_cells) {
@@ -34,17 +40,50 @@ class DOMGrid {
         }
     }
 
-    clear_grid(update_census = true) {
+    /**
+     * clear the grid via DOM manipulation
+     * using the refs provided by Vue.
+     *
+     */
+    clear_grid() {
         if (!this.component) return not_set_err();
-        const {grid, color_cell} = this.component;
+        const {grid, activate_cell} = this.component;
 
         for (let [i, j] of this.active_cells()) {
-            color_cell(i, j, false);
+            activate_cell(i, j, false);
         }
 
-        if (update_census) {
-            grid.update_census(true);
+        grid.update_census(true);
+    }
+
+    /**
+     * Shuffle the grid cells.
+     */
+    shuffle_grid() {
+        if (!this.component) return not_set_err();
+        const {grid, activate_cell} = this.component;
+
+        let alive_cells_len = grid.alive().size,
+            width = grid.width(),
+            height = grid.height();
+
+        this.clear_grid();
+
+        // populate grid with same number of active cells
+        // as the just cleared grid
+        const added = new Set<string>();
+        while (alive_cells_len) {
+            const [i, j] = [R(0, height-1), R(0, width-1)]; // random grid index
+            const index = grid.encode_index(i, j);
+            if (added.has(index)) continue;
+
+            activate_cell(i, j);
+            added.add(index);
+
+            alive_cells_len -= 1;
         }
+
+        grid.update_census();
     }
 }
 

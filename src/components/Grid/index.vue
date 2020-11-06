@@ -62,7 +62,7 @@ export default class Grid extends Vue {
         if ((!this.dragging && !clicked) || this.is_halted) return;
 
         const {i,j} = index;
-        this.color_cell(i, j);
+        this.activate_cell(i, j);
 
         if (clicked) {
             this.on_draw_end();
@@ -82,7 +82,7 @@ export default class Grid extends Vue {
         W.APP_STATE.grid.component = this;
     }
 
-    private color_cell(i:number, j:number, alive = true) {
+    private activate_cell(i:number, j:number, alive = true) {
         const box = this.cell_elem(i, j);
         this.grid.set(i, j, alive);
         box.style.background = alive ? this.color() : 'initial';

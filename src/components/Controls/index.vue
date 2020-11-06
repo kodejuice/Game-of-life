@@ -90,7 +90,7 @@ export default class Controls extends Vue {
     shuffle() {
         if (this.grid_size == 0) return;
         this.dom_update(()=>{
-            this.grid.shuffle();
+            W.APP_STATE.grid.shuffle_grid();
         });
     }
 
