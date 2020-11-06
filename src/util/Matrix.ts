@@ -84,8 +84,10 @@ class Matrix<T> {
      * Increases the height by 1.
      */
     increase_height() {
-        if (this.height() > 500) return;
-        this.$set_height(this.height() + 1);
+        if (this.height() >= 200) return;
+        this.$update_grid(
+            this.$set_height(this.height() + 1)
+        );
     }
 
     /**
@@ -118,15 +120,18 @@ class Matrix<T> {
     }
 
     /**
-     * increase/decrease grid height
-     * @param {number} new_height
+     * Sets the grid height.
+     *
+     * @param      {number}  new_height  The new height
+     * @param      {T[][]}       grid        The grid
      */
-    protected $set_height(new_height: number) {
+    protected $set_height(new_height: number, grid?: T[][]) {
         const $height = this.height(),
               $width  = this.width();
         let to_add = new_height - $height;
 
-        const grid: T[][] = clone(this.grid.map(r => clone(r)));
+        grid = grid || this.grid;
+        grid = clone(grid.map(r => clone(r)));
 
         if (to_add > 0) {
             while (to_add--) {
@@ -138,20 +143,25 @@ class Matrix<T> {
             }
         }
 
-        this.$update_grid(grid);
+        return grid;
     }
-
+    
     /**
-     * increase/decrease grid width
-     * @param {number} new_width
+     * Sets the grid width.
+     *
+     * @param      {number}  new_height  The new width
+     * @param      {T[][]}       grid        The grid
      */
-    protected $set_width(new_width: number) {
+    protected $set_width(new_width: number, grid?: T[][]) {
         const $width = this.width();
 
         const to_add = new_width - $width;
         const abs_toadd = Math.abs(to_add);
 
         if (to_add == 0) return;
+
+        grid = grid || this.grid;
+        grid = clone(grid.map(r => clone(r)));
 
         // add/remove equal number of cells to/from both left & right of each row
         // e.g,
@@ -165,8 +175,6 @@ class Matrix<T> {
 
         const left = abs_toadd >> 1,
               right = abs_toadd - left;
-
-        const grid: T[][] = clone(this.grid.map(r => clone(r)));
 
         const {default_value} = this;
         grid.forEach(row => {
@@ -183,7 +191,7 @@ class Matrix<T> {
             }
         });
 
-        this.$update_grid(grid);
+        return grid;
     }
 }
 

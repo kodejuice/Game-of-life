@@ -175,9 +175,12 @@ class ConwayGrid extends Matrix<boolean> {
         if (!factor) return this.$scale_factor;
 
         const {rows, cols} = SCALES[factor];
-        this.$set_width(cols);
-        this.$set_height(rows);
 
+        let new_grid;
+        new_grid = this.$set_width(cols);
+        new_grid = this.$set_height(rows, new_grid);
+
+        this.$update_grid(new_grid);
         this.$update_grid_stat();
 
         return this.$scale_factor = factor;
