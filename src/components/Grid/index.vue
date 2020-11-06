@@ -42,6 +42,13 @@ export default class Grid extends Vue {
     @Prop() grid!: ConwayGrid;
     @Prop() is_halted!: boolean;
 
+    mounted() {
+        this.globalize_grid_component();
+    }
+    updated() {
+        this.globalize_grid_component();
+    }
+
     drag_start() {
         this.dragging = true;
     }
@@ -62,13 +69,17 @@ export default class Grid extends Vue {
         }
     }
 
-
     color() {
         const {cell_color} = W.APP_STATE;
         if (cell_color == 'random') {
             return random_color();
         }
         return cell_color;
+    }
+
+    private globalize_grid_component() {
+        // is this bad practice?
+        W.APP_STATE.grid.component = this;
     }
 
     private color_cell(i:number, j:number, alive = true) {
