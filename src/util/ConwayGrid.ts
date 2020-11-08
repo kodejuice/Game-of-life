@@ -20,11 +20,6 @@ const SCALES = [
 
 type SCALE = 1 | 2 | 3 | 4 | 5 | 6 | 7;
 
-/*
-next_generation(): this
-randomize(): this
- */
-
 
 /**
  * Conways Game Of Life grid.
@@ -34,7 +29,7 @@ randomize(): this
  * @author     (Biereagu Sochima <sochima.agu1@gmail.com>)
  */
 class ConwayGrid extends Matrix<boolean> {
-    private dead_cells: Set<string>;
+    generations: number = 0;
     private alive_cells: Set<string>;
     private cell_ids: Map<string, number>;
     private $scale_factor: SCALE = 2;
@@ -46,7 +41,6 @@ class ConwayGrid extends Matrix<boolean> {
             false,
         );
 
-        this.dead_cells = new Set();
         this.alive_cells = new Set();
         this.cell_ids = new Map();
         this.$init_cell_ids();
@@ -59,12 +53,6 @@ class ConwayGrid extends Matrix<boolean> {
         return this.alive_cells;
     }
 
-    /**
-     * return dead cells set
-     */
-    dead() {
-        return this.dead_cells;
-    }
 
     /**
      * encode index of a cell in a grid as string "i:j"
@@ -162,15 +150,77 @@ class ConwayGrid extends Matrix<boolean> {
      * update population sets, so vue can update dom accordinly
      */
     update_census(clear = false) {
-        // this lets Vue know about changes in the sets
         if (clear) {
-            this.dead_cells = new Set();
             this.alive_cells = new Set();
+            this.generations = 0;
         } else {
+            // this lets Vue know about changes in the sets
             this.alive_cells = new Set(this.alive_cells);
-            this.dead_cells = new Set(this.dead_cells);
         }
     }
+
+
+    update_active_cells(active: Set<string>) {
+        this.alive_cells = active;
+        this.generations += 1;
+    }
+
+    /**
+     * Return the active next generation cells.
+     *
+     * This returns a set containing the indexes
+     * of cells that are active in the next generation.
+     *
+     * @return     {Set<string>}    indexes of active cells in the next generation
+     */
+    next_generation(): Set<string> {
+        const $height = this.height(),
+            $width = this.width(),
+            next_gen = new Set<string>();
+
+        for (let i=0; i<$height; ++i) {
+            for (let j=0, n, idx; j<$width; ++j) {
+                n = this.live_neighbours(i, j);
+                idx = this.encode_index(i, j);
+
+                if (this.get(i, j)) { // live cell
+                    if (n==2 || n==3) {
+                        next_gen.add(idx);
+                    }
+                } else { // dead cell
+                    if (n == 3) {
+                        next_gen.add(idx);
+                    }
+                }
+            }
+        }
+
+        return next_gen;
+    }
+
+    /**
+     * Return the number of live/active neighbouring cells
+     *  of a given cell index
+     *
+     * @param      {number}  i       row index
+     * @param      {number}  j       column index
+     * @return     {number}          number of live neighbouring cells
+     */
+    private live_neighbours(i: number, j: number): number {
+        let live = 0;
+        const neighbours = [
+            [i-1, j-1], [i-1, j], [i-1,j+1],
+            [i,   j-1],           [i,  j+1],
+            [i+1, j-1], [i+1, j], [i+1,j+1]
+        ];
+        for (let [r,c] of neighbours) {
+            if (this.in_range(r, c)) {
+                live += this.get(r, c) ? 1 : 0;
+            }
+        }
+        return live;
+    }
+
 
     /**
      * scale grid, sets the height/width of grid
@@ -203,7 +253,6 @@ class ConwayGrid extends Matrix<boolean> {
      */
     private $update_grid_stat(check_cells = true) {
         this.alive_cells = new Set();
-        this.dead_cells = new Set();
         this.$init_cell_ids();
 
         if (!check_cells) return;
@@ -226,10 +275,8 @@ class ConwayGrid extends Matrix<boolean> {
         const index = this.encode_index(i, j);
         if (this.get(i, j) == true) { // alive
             this.alive_cells.add(index);
-            this.dead_cells.delete(index);
         }
         else if (monitor_deaths) { // dead
-            this.dead_cells.add(index);            
             this.alive_cells.delete(index);
         }
     }

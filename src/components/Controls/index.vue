@@ -37,7 +37,7 @@
 
             <div class="col col-3 population" title="Census">
                 <p class="text-info">[{{grid.alive().size}} alive]</p>
-                <p class="text-danger">[{{grid.dead().size}} dead]</p>
+                <p class="text-warning" title="Generations">[{{grid.generations}} gen.]</p>
             </div>
 
             <div class="col"></div>
