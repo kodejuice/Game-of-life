@@ -50,6 +50,7 @@ class Matrix<T> {
 
     /**
      * Clears the matrix.
+     * @unused
      */
     clear() {
         let $height = this.height(),
@@ -92,6 +93,7 @@ class Matrix<T> {
 
     /**
      * Shuffle matrix
+     * @unused
      */
     shuffle() {
         this.$update_grid(shuffle(this.grid.map(row => shuffle(row))));
