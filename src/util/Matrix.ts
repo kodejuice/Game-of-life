@@ -105,7 +105,7 @@ class Matrix<T> {
      * @param  {number}  j column index
      * @return {boolean}   in range?
      */
-    private in_range(i: number, j: number): boolean {
+    protected in_range(i: number, j: number): boolean {
         return (i>=0 && i<this.height()) && (j>=0 && j<this.width());
     }
 

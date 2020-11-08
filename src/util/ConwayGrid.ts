@@ -174,28 +174,59 @@ class ConwayGrid extends Matrix<boolean> {
      * @return     {Set<string>}    indexes of active cells in the next generation
      */
     next_generation(): Set<string> {
-        const $height = this.height(),
-            $width = this.width(),
-            next_gen = new Set<string>();
+        const alive = this.alive();
+        const next_gen = new Set<string>();
 
-        for (let i=0; i<$height; ++i) {
-            for (let j=0, n, idx; j<$width; ++j) {
-                n = this.live_neighbours(i, j);
-                idx = this.encode_index(i, j);
+        for (let index of alive) {
+            const [i, j] = this.decode_index(index);
+            const n = this.live_neighbours(i, j);
+            if (n==2 || n==3) {
+                next_gen.add(index);
+            }
 
-                if (this.get(i, j)) { // live cell
-                    if (n==2 || n==3) {
-                        next_gen.add(idx);
-                    }
-                } else { // dead cell
-                    if (n == 3) {
-                        next_gen.add(idx);
+            // visualize the grid as one of these:
+            //    X _ _        X _ _
+            //    O _ _   OR   _ O _
+            //    _ _ _        _ _ _
+            //
+            // where X -> the position of this cell (current iteration)
+            //       O -> cells which are neighbours of X
+            //
+            // we need to know if the cell `O` is dead and has 3 live neighbours
+            // if it meets that criteria, then it makes it into the next generation
+            //
+            for (let cell_O of this.neighbours(i, j)) {
+                const [ci, cj] = cell_O;
+                if (this.get(ci,cj) == false) {
+                    if (this.live_neighbours(ci, cj) == 3) {
+                        next_gen.add(this.encode_index(ci, cj));
                     }
                 }
             }
         }
 
         return next_gen;
+    }
+
+
+
+    /**
+     * Return the neighbours of a cell
+     *
+     * @param      {number}  i       row index
+     * @param      {number}  j       column index
+     */
+    private *neighbours(i:number, j:number): Generator<[number, number]> {
+        const neighbours = [
+            [i-1, j-1], [i-1, j], [i-1,j+1],
+            [i,   j-1],           [i,  j+1],
+            [i+1, j-1], [i+1, j], [i+1,j+1]
+        ];
+        for (let [r, c] of neighbours) {
+            if (this.in_range(r, c)) {
+                yield [r, c];
+            }
+        }
     }
 
     /**
@@ -208,15 +239,8 @@ class ConwayGrid extends Matrix<boolean> {
      */
     private live_neighbours(i: number, j: number): number {
         let live = 0;
-        const neighbours = [
-            [i-1, j-1], [i-1, j], [i-1,j+1],
-            [i,   j-1],           [i,  j+1],
-            [i+1, j-1], [i+1, j], [i+1,j+1]
-        ];
-        for (let [r,c] of neighbours) {
-            if (this.in_range(r, c)) {
-                live += this.get(r, c) ? 1 : 0;
-            }
+        for (let [r,c] of this.neighbours(i, j)) {
+            live += this.get(r, c) ? 1 : 0;
         }
         return live;
     }
