@@ -74,34 +74,55 @@ export default class Controls extends Vue {
     overlay: boolean = false;
     @Prop() grid!: ConwayGrid;
 
+    /**
+     * scale grid
+     * @param {'up'|'down'} dir direction
+     */
     scale(dir: 'up'|'down') {
         this.dom_update(()=>{
             this.grid.scale(dir);
         });
     }
 
+    /**
+     * clear grid
+     */
     clear() {
-        if (this.grid_size==0 || !confirm("Clear the grid?")) return;
+        if (this.active_cells==0 || !confirm("Clear the grid?")) return;
         this.dom_update(()=>{
             W.APP_STATE.grid.clear_grid();
         })
     }
 
+    /**
+     * shuffle grid
+     */
     shuffle() {
-        if (this.grid_size == 0) return;
+        if (this.active_cells == 0) return;
         this.dom_update(()=>{
             W.APP_STATE.grid.shuffle_grid();
         });
     }
 
+    /**
+     * onColorChange event handler
+     * @param {string} color [description]
+     */
     update_cell_color(color: string) {
         W.APP_STATE.cell_color = color;
     }
 
-    get grid_size() {
+    /**
+     * get active cells count
+     */
+    get active_cells() {
         return this.grid.alive().size;
     }
 
+    /**
+     * dom-update operation handler
+     * @param {()=>void} fn  dom-update fn callback
+     */
     private dom_update(fn: ()=>void) {
         this.$emit('halt');
         this.overlay = true;
