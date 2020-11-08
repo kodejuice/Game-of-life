@@ -36,12 +36,12 @@ class DOMGrid {
 
 
     /**
-     * generator to return the indexes of active cells
+     * generator to return the indexes of cells
      * in the grid.
      */
-    *active_cells(): Generator<[number, number]> {
+    *cells_index(alive?: Set<string>): Generator<[number, number]> {
         const {grid, activate_cell} = this.component;
-        const alive_cells = grid.alive();
+        const alive_cells = alive || grid.alive();
 
         for (let cell_index of alive_cells) {
             yield grid.decode_index(cell_index);
@@ -54,10 +54,10 @@ class DOMGrid {
      *
      */
     clear_grid() {
-        if (!this.component) return not_set_err();
+        if (!this.component) return this.not_set_err();
         const {grid, activate_cell} = this.component;
 
-        for (let [i, j] of this.active_cells()) {
+        for (let [i, j] of this.cells_index()) {
             activate_cell(i, j, false);
         }
 
@@ -68,7 +68,7 @@ class DOMGrid {
      * Shuffle the grid cells.
      */
     shuffle_grid() {
-        if (!this.component) return not_set_err();
+        if (!this.component) return this.not_set_err();
         const {grid, activate_cell} = this.component;
 
         let alive_cells_len = grid.alive().size,
@@ -93,11 +93,11 @@ class DOMGrid {
 
         grid.update_census();
     }
+
+    not_set_err() {
+        alert("An error occured, Please refresh this page.");
+    }
 }
 
-
-function not_set_err() {
-    alert("An error occured, Please refresh this page.");
-}
 
 export default DOMGrid;
