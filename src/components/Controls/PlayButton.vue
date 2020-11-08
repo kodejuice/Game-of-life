@@ -1,12 +1,15 @@
 <template>
-    <b-button variant="success">
-        <b-icon icon="pause" font-scale="1.4" /> START
+    <b-button
+        :variant="button_variant"
+        @click="$emit('update:running', !running)"
+    >
+        <b-icon font-scale="1.4" :icon="button_type.toLowerCase()" /> {{button_type}}
     </b-button>
 </template>
 
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Prop } from 'vue-property-decorator';
 import { BButton, BIcon, BIconPlay, BIconPause } from 'bootstrap-vue';
 
 @Component({
@@ -18,6 +21,15 @@ import { BButton, BIcon, BIconPlay, BIconPause } from 'bootstrap-vue';
     }
 })
 export default class PlayButton extends Vue {
+    @Prop() running!: boolean;
+
+    get button_type() {
+        return this.running ? "PAUSE" : "PLAY";
+    }
+
+    get button_variant() {
+        return this.running ? "warning" : "success";
+    }
 }
 </script>
 

@@ -3,7 +3,12 @@
         <div class="overlay" v-if="overlay"></div>
         <div class="controls row">
             <div class="col col-2 rand">
-                <b-button variant="outline-info" title="Shuffle grid cells" @click="shuffle">
+                <b-button
+                    @click="shuffle"
+                    :disabled="running"
+                    variant="outline-info"
+                    title="Shuffle grid cells"
+                >
                     <b-icon icon="shuffle" /> random
                 </b-button>
             </div>
@@ -15,13 +20,14 @@
             </div>
 
             <div class="col col-1 clear">
-                <b-button variant='danger' title="Clear grid" @click="clear">
+                <b-button :disabled="running" @click="clear" variant='danger' title="Clear grid">
                     <b-icon icon="x-circle-fill" />
                 </b-button>
             </div>
 
             <div class="col col-2 zoom">
                 <zoom-button
+                    :disabled="running"
                     :can_scale_up="grid.can_scale('up')"
                     :can_scale_down="grid.can_scale('down')"
                     @scale_up="scale('up')"
@@ -40,7 +46,9 @@
             </div>
 
             <div class="col col-2 center play-pause">
-                <play-button />
+                <play-button
+                    :running.sync="running"
+                />
             </div>
         </div>
     </div>
@@ -48,7 +56,7 @@
 
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Watch, Vue } from 'vue-property-decorator';
 import { BButton, BIcon, BIconShuffle, BIconXCircleFill } from 'bootstrap-vue';
 import {defer} from 'lodash';
 import ChangeColorButton from './ChangeColorButton.vue';
@@ -72,6 +80,7 @@ import W from '../../state';
 })
 export default class Controls extends Vue {
     overlay: boolean = false;
+    running: boolean = false;
     @Prop() grid!: ConwayGrid;
 
     /**
@@ -134,6 +143,15 @@ export default class Controls extends Vue {
             });
         });
     }
+
+    /**
+     * `running` state watcher
+     */
+    @Watch('running')
+    onPlayToggle(val: boolean) {
+        console.log(val);
+    }
+
 }
 </script>
 
