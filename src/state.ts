@@ -1,4 +1,4 @@
-import DOMGrid from './util/dom-grid';
+import DOMGrid from './util/DomGrid';
 
 const W = window as any;
 

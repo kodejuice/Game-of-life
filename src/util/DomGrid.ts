@@ -3,11 +3,10 @@
  * (C) 2020
  */
 
-import Vue from 'vue';
 import {random as R} from 'lodash';
 
 import ConwayGrid from './ConwayGrid';
-
+import ConwaySimulation from './ConwaySimulation';
 
 interface GridComponent extends Vue {
     activate_cell(i:number, j:number, active?:boolean): void,
@@ -27,11 +26,20 @@ class DOMGrid {
     // @see    /src/components/Grid/index.vue     @globalize_grid_component()
     public component!: GridComponent;
 
+    // simulation class
+    public simulation: ConwaySimulation;
+
+    constructor() {
+        // initialize simulation class with an instance of DOMGrid
+        this.simulation = new ConwaySimulation(this);
+    }
+
+
     /**
      * generator to return the indexes of active cells
      * in the grid.
      */
-    *active_cells() {
+    *active_cells(): Generator<[number, number]> {
         const {grid, activate_cell} = this.component;
         const alive_cells = grid.alive();
 
