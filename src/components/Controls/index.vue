@@ -83,6 +83,13 @@ export default class Controls extends Vue {
     running: boolean = false;
     @Prop() grid!: ConwayGrid;
 
+    mounted() {
+        const that = this;
+        W.APP_STATE.grid.simulation.play_pause = (running: boolean = true)=>{
+            that.running = running;
+        };
+    }
+
     /**
      * scale grid
      * @param {'up'|'down'} dir direction
@@ -97,7 +104,7 @@ export default class Controls extends Vue {
      * clear grid
      */
     clear() {
-        if (this.active_cells==0 || !confirm("Clear the grid?")) return;
+        if (this.active_cells_count==0 || !confirm("Clear the grid?")) return;
         this.dom_update(()=>{
             W.APP_STATE.grid.clear_grid();
         })
@@ -107,7 +114,7 @@ export default class Controls extends Vue {
      * shuffle grid
      */
     shuffle() {
-        if (this.active_cells == 0) return;
+        if (this.active_cells_count == 0) return;
         this.dom_update(()=>{
             W.APP_STATE.grid.shuffle_grid();
         });
@@ -124,12 +131,13 @@ export default class Controls extends Vue {
     /**
      * get active cells count
      */
-    get active_cells() {
+    get active_cells_count() {
         return this.grid.alive().size;
     }
 
     /**
      * dom-update operation handler
+     * displays an overlay while the dom-update fn is running
      * @param {()=>void} fn  dom-update fn callback
      */
     private dom_update(fn: ()=>void) {
@@ -148,8 +156,13 @@ export default class Controls extends Vue {
      * `running` state watcher
      */
     @Watch('running')
-    onPlayToggle(val: boolean) {
-        console.log(val);
+    onPlayToggle(running: boolean) {
+        const {simulation} = W.APP_STATE.grid;
+        if (running) {
+            simulation.run();
+        } else {
+            simulation.stop();
+        }
     }
 
 }
