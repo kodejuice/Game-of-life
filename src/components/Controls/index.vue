@@ -65,6 +65,8 @@ import ZoomButton from './ZoomButton.vue';
 import PlayButton from './PlayButton.vue';
 import ConwayGrid from '../../util/ConwayGrid';
 import W from '../../state';
+import Toasted from 'vue-toasted';
+Vue.use(Toasted);
 
 @Component({
     components: {
@@ -88,6 +90,17 @@ export default class Controls extends Vue {
         W.APP_STATE.grid.simulation.play_pause = (running: boolean = true)=>{
             that.running = running;
         };
+
+        // globalize toasted plugin
+        W.APP_STATE.grid.simulation.showToast = (message: string, delay: number = 2300, type = 'error') => {
+            that.$toasted.show(message, {
+                type,
+                duration: delay,
+                theme: 'bubble',
+                position: 'top-left',
+                singleton: true,
+            });
+        }
     }
 
     /**

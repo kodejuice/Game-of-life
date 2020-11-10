@@ -40,6 +40,13 @@ class ConwaySimulation {
      */
     public play_pause!: (running: boolean)=>void;
 
+    /**
+     * used to show toast notifications to the user
+     *
+     * @see   /src/App.vue  @mounted
+     */
+    public showToast!: (message: string, delay: number, type?: 'error')=>void;
+
     // simulation running state
     private running: boolean = false;
 
@@ -78,6 +85,7 @@ class ConwaySimulation {
         const next_gen = grid.next_generation();
         if (isEqual(active, next_gen)) {
             // no changes, a still-life configuration
+            this.showToast('Still life detected', 1900);
             return false;
         }
 
