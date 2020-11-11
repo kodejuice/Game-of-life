@@ -8,8 +8,7 @@ import {clone, shuffle} from 'lodash';
 /**
  * Matrix data structure.
  *
- * @class      Matrix
- * @extends    Matrix<true|false>
+ * @class      Matrix<T>
  * @author     (Biereagu Sochima <sochima.agu1@gmail.com>)
  */
 class Matrix<T> {
