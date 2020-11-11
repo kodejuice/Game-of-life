@@ -20,7 +20,7 @@
             </div>
 
             <div class="col col-1 clear">
-                <b-button :disabled="running" @click="clear" variant='danger' title="Clear grid">
+                <b-button :disabled="running" @click="clear" variant='danger' title="Clear/Init grid">
                     <b-icon icon="x-circle-fill" />
                 </b-button>
             </div>
@@ -117,7 +117,15 @@ export default class Controls extends Vue {
      * clear grid
      */
     clear() {
-        if (this.active_cells_count==0 || !confirm("Clear the grid?")) return;
+        if (this.active_cells_count() == 0) {
+            W.APP_STATE.grid.init_grid();
+            return;
+        }
+
+        if (!confirm("Clear the grid?")) {
+            return;
+        }
+
         this.dom_update(()=>{
             W.APP_STATE.grid.clear_grid();
         })
@@ -127,7 +135,7 @@ export default class Controls extends Vue {
      * shuffle grid
      */
     shuffle() {
-        if (this.active_cells_count == 0) return;
+        if (this.active_cells_count() == 0) return;
         this.dom_update(()=>{
             W.APP_STATE.grid.shuffle_grid();
         });
@@ -144,7 +152,7 @@ export default class Controls extends Vue {
     /**
      * get active cells count
      */
-    get active_cells_count() {
+    active_cells_count() {
         return this.grid.alive().size;
     }
 
