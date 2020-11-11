@@ -49,6 +49,23 @@ class DOMGrid {
     }
 
     /**
+     * Initialize grid cells
+     */
+    init_grid() {
+        if (!this.component) return this.not_set_err();
+        const {grid, activate_cell} = this.component;
+
+        const width = grid.width(), height = grid.height();
+        const cells = width * height;
+
+        let toCover = .4 * cells; // 40%
+        while (toCover--) {
+            const [i, j] = [R(0, height-1), R(0, width-1)]; // random grid index
+            activate_cell(i, j);
+        }
+    }
+
+    /**
      * clear the grid via DOM manipulation
      * using the refs provided by Vue.
      *

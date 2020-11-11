@@ -47,7 +47,7 @@ export default class Grid extends Vue {
      *  @mounted
      *  @updated
      */
-    mounted() { this.globalize_grid_component(); }
+    mounted() { this.globalize_grid_component(true); }
     updated() { this.globalize_grid_component(); }
 
     /**
@@ -108,9 +108,12 @@ export default class Grid extends Vue {
     /**
      * make this component instance available in APP state
      */
-    private globalize_grid_component() {
+    private globalize_grid_component(init_grid = false) {
         // is this bad practice?
         W.APP_STATE.grid.component = this;
+        if (init_grid) {
+            W.APP_STATE.grid.init_grid();
+        }
     }
 
     /**
