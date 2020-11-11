@@ -1,8 +1,8 @@
 <template>
     <div
         ref="cell"
-        @click="$emit('mouse_move', $event, true, index)"
-        @mousemove="$emit('mouse_move', $event, false, index)"
+        @click="$emit('mouse_move', $event, index, true)"
+        @mousemove="$emit('mouse_move', $event, index, false)"
         :class="{col: true, [`scale-${scale_factor}`]: true}"
         :style="{background: active ? cell_color : 'unset'}"
     ></div>

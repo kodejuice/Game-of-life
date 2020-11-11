@@ -65,20 +65,33 @@ export default class Grid extends Vue {
     }
 
     /**
-     * mousemove event
-     * @param {Event}                ev
-     * @param {boolean}              clicked    was the cell clicked?
-     * @param {{i:number, j:number}} index      index of the cell
+     * mousemove | click
+     * @param {EventMouseEvent|KeyboardEvent}   ev
+     * @param {{i:number, j:number}}            index      index of the cell
+     * @param {boolean}                         clicked    was the cell clicked?
      */
-    mousemove(ev: Event, clicked = false, index: {i:number, j:number}) {
+    mousemove(ev: MouseEvent|KeyboardEvent, index: {i:number, j:number}, clicked = false) {
         if ((!this.dragging && !clicked) || this.is_halted) return;
 
+        if (ev.ctrlKey) {
+            return this.clear_cell(index);
+        }
+
         const {i,j} = index;
-        this.activate_cell(i, j, !this.grid.get(i,j));
+        this.activate_cell(i, j);
 
         if (clicked) {
             this.on_draw_end();
         }
+    }
+
+    /**
+     * clear cell
+     * @param {{i:number, j:number}} index      index of the cell
+     */
+    clear_cell(index: {i:number, j:number}) {
+        const {i, j} = index;
+        this.activate_cell(i, j, false);
     }
 
     /**
