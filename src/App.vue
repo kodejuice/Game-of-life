@@ -44,7 +44,7 @@ export default class App extends Vue {
         // recommend a chrome-based browser
         const isChromeBased = !!(window as any).chrome;
         if (!isChromeBased) {
-            this.$toasted.show('Please switch to a Chromium based browser (e.g Edge, Opera, Vivaldi)', {
+            this.$toasted.show('Please switch to a Chromium based browser (e.g Chrome, Opera, Edge)', {
                 position: 'top-left',
                 type: 'info',
                 theme: 'outline',
