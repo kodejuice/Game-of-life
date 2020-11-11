@@ -74,7 +74,7 @@ export default class Grid extends Vue {
         if ((!this.dragging && !clicked) || this.is_halted) return;
 
         const {i,j} = index;
-        this.activate_cell(i, j);
+        this.activate_cell(i, j, !this.grid.get(i,j));
 
         if (clicked) {
             this.on_draw_end();
