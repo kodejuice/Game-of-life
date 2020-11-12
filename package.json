@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "name": "Game of Life",
+=======
+  "name": "Game-of-Life",
+>>>>>>> meta info
   "version": "0.1.0",
   "private": true,
   "scripts": {
