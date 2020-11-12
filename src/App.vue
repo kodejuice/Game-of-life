@@ -1,7 +1,19 @@
 <template>
     <div id="app" class="container-fluid conway">
 
+        <about-modal />
+
         <div style="position: relative;">
+            <header class="header row">
+                <div class="col-6">
+                    <h1 title="Conway's game of life"> Game Of Life </h1>
+                </div>
+                <div class="col"></div>
+                <div class="col-4">
+                    <b-button v-b-modal.about href="#" class="btn btn-light about"> ABOUT </b-button>
+                </div>
+            </header>
+
             <grid
                 :grid="conway_grid"
                 :is_halted="halt_simulation"
@@ -21,6 +33,8 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import Grid from './components/Grid/index.vue';
+import AboutModal from './components/AboutModal.vue';
+import { BButton, ModalPlugin } from 'bootstrap-vue';
 import Controls from './components/Controls/index.vue';
 import Toasted from 'vue-toasted';
 import W from './state';
@@ -28,19 +42,23 @@ import W from './state';
 import ConwayGrid from './util/ConwayGrid';
 
 Vue.use(Toasted);
+Vue.use(ModalPlugin);
 
 @Component({
     components: {
         Grid,
+        AboutModal,
         Controls,
+        BButton,
     },
 })
-
 export default class App extends Vue {
     halt_simulation: boolean = false;
+    notify_msg: boolean = false;
     conway_grid: ConwayGrid = new ConwayGrid();
 
     mounted() {
+        if (this.notify_msg) return;
         // recommend a chrome-based browser
         const isChromeBased = !!(window as any).chrome;
         if (!isChromeBased) {
@@ -49,6 +67,7 @@ export default class App extends Vue {
                 type: 'info',
                 theme: 'outline',
             });
+            this.notify_msg = true;
         }
     }
 
@@ -60,5 +79,21 @@ export default class App extends Vue {
 .toasted-container.top-left {
     top: 0%;
     left: 3%;
+}
+
+header.header {
+    div.col-6 {
+        h1 {
+            margin-bottom: 0;
+            text-shadow: 3px 3px 2px #111;
+        }
+    }
+    div.col-4 {
+        max-width: 100px;
+    }
+}
+
+.modal-content {
+    color: #282c34;
 }
 </style>
