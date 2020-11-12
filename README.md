@@ -13,10 +13,9 @@ Technologies utilized:
 
 
 ## Local setup
-Prebuilt assets are in the <a href="./dist">`/dist`</a> directory, so after cloning this repo to your localhost, you can access the app through `../game-of-life/dist/index.html`.
+Prebuilt assets are in the <a href="./dist">`/dist`</a> directory, so after cloning this repo to your localhost, you can access the app through `.../game-of-life/dist/index.html`.
 
-If you want to make changes, you need to install node dependencies first.
-
+If you want to make changes, you need to install node dependencies first:
 ```
 npm install
 ```
