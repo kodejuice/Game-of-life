@@ -16,12 +16,12 @@
                 <div class="row profile-info" title="Developer">
                     <a href="https://kodejuice.ml">
                         <div class="col link">
-                            <img alt="Developer" src="/icon/sb.png" /> Sochima Biereagu
+                            <img alt="dev" src="/icon/sb.png" /> Sochima Biereagu
                         </div>
                     </a>
                     <a href="https://github.com/kodejuice/life-simulation">
                         <div class="col link">
-                            <img alit="fork on github" src="/icon/github.png" /> Fork on github
+                            <img alit="fork" src="/icon/github.png" /> Fork on github
                         </div>
                     </a>
                 </div>
@@ -57,6 +57,9 @@
             </div>
 
             <h3>External Resources</h3>
+            <iframe style="width: 100%;" height="454" src="https://www.youtube.com/embed/R9Plq-D1gEk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+            <h4>Links</h4>
             <ul>
                 <li><a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">Conway's Game of Life (Wikipedia)</a></li>
                 <li><a href="https://www.conwaylife.com/wiki/">LifeWiki</a></li>
