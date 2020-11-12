@@ -92,6 +92,7 @@ export default class Grid extends Vue {
     clear_cell(index: {i:number, j:number}) {
         const {i, j} = index;
         this.activate_cell(i, j, false);
+        this.on_draw_end();
     }
 
     /**
