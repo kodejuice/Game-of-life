@@ -19,7 +19,7 @@
                             <img alt="dev" src="/icon/sb.png" /> Sochima Biereagu
                         </div>
                     </a>
-                    <a href="https://github.com/kodejuice/life-simulation">
+                    <a href="https://github.com/kodejuice/game-of-life">
                         <div class="col link">
                             <img alit="fork" src="/icon/github.png" /> Fork on github
                         </div>
