@@ -63,6 +63,8 @@ class DOMGrid {
             const [i, j] = [R(0, height-1), R(0, width-1)]; // random grid index
             activate_cell(i, j);
         }
+
+        grid.update_census();
     }
 
     /**
