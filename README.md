@@ -1,6 +1,18 @@
-# conway
+# Game of Life
 
-## Project setup
+<a href="https://gameoflife.csb.app">https://gameoflife.csb.app</a>
+
+A web simulation of John Conway's <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">Game of Life</a> cellular automaton.
+
+Technologies utilized:
+- Vue
+- TypeScript
+
+### Preview
+<img src="./demo.gif" alt="Game of Life preview" />
+
+
+## Local setup
 ```
 npm install
 ```
@@ -14,6 +26,3 @@ npm run serve
 ```
 npm run build
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
