@@ -57,7 +57,7 @@
             </div>
 
             <h3>External Resources</h3>
-            <iframe style="width: 100%;" height="454" src="https://www.youtube.com/embed/R9Plq-D1gEk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe style="width: 100%;" height="454" src="https://www.youtube.com/embed/ouipbDkwHWA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
             <h4>Links</h4>
             <ul>
