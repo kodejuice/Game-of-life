@@ -9,7 +9,7 @@ Technologies utilized:
 - TypeScript
 
 ### Preview
-<img src="./grid.png" alt="Game of Life preview" />
+<img src="./grid.gif" alt="Game of Life preview" />
 
 
 ## Local setup
