@@ -54,10 +54,11 @@ Vue.use(ModalPlugin);
 })
 export default class App extends Vue {
     halt_simulation: boolean = false;
-    notify_msg: boolean = false;
     conway_grid: ConwayGrid = new ConwayGrid();
+    //notify_msg: boolean = false;
 
     mounted() {
+        /*
         if (this.notify_msg) return;
         // recommend a chrome-based browser
         const isChromeBased = !!(window as any).chrome;
@@ -69,6 +70,7 @@ export default class App extends Vue {
             });
             this.notify_msg = true;
         }
+        */
     }
 
 }
