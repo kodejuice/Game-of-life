@@ -14,7 +14,7 @@
             <div class="col"></div>
             <div class="col-6">
                 <div class="row profile-info" title="Developer">
-                    <a href="https://kodejuice.ml">
+                    <a href="https://sochima.me">
                         <div class="col link">
                             <img alt="dev" src="/icon/sb.png" /> Sochima Biereagu
                         </div>
