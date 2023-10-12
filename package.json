@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "serve": "NODE_OPTIONS=--openssl-legacy-provider vue-cli-service serve",
+    "build": "NODE_OPTIONS=--openssl-legacy-provider vue-cli-service build"
   },
   "dependencies": {
-    "bootstrap": "^4.5.3",
+    "bootstrap": "latest",
     "bootstrap-vue": "^2.18.1",
     "core-js": "^3.6.5",
     "lodash": "^4.17.20",
